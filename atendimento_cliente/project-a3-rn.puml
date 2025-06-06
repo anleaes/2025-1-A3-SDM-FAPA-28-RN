@@ -1,0 +1,107 @@
+@startuml Aplicativo de Serviço de Atendimento ao Cliente
+
+' Classes
+class Cliente {
+    -id: Integer
+    -nome: String
+    -email: String
+    -telefone: String
+    -endereco: String
+    -dataCadastro: DateTime
+    +criarConta()
+    +atualizarDados()
+    +excluirConta()
+}
+
+class Atendente {
+    -id: Integer
+    -nome: String
+    -email: String
+    -departamento: String
+    -nivelAcesso: Integer
+    -dataContratacao: DateTime
+    +atenderChamado()
+    +transferirChamado()
+    +finalizarAtendimento()
+}
+
+class Chamado {
+    -id: Integer
+    -titulo: String
+    -descricao: String
+    -status: String
+    -prioridade: String
+    -dataAbertura: DateTime
+    -dataFechamento: DateTime
+    +abrirChamado()
+    +atualizarStatus()
+    +fecharChamado()
+}
+
+class Categoria {
+    -id: Integer
+    -nome: String
+    -descricao: String
+    -tempoResposta: Integer
+    -departamentoResponsavel: String
+    +criarCategoria()
+    +atualizarCategoria()
+    +excluirCategoria()
+}
+
+class Avaliacao {
+    -id: Integer
+    -nota: Integer
+    -comentario: String
+    -dataAvaliacao: DateTime
+    -tipoAvaliacao: String
+    +registrarAvaliacao()
+    +calcularMedia()
+    +gerarRelatorio()
+}
+
+class Solucao {
+    -id: Integer
+    -descricao: String
+    -passos: String
+    -dataCriacao: DateTime
+    -autor: String
+    +criarSolucao()
+    +atualizarSolucao()
+    +excluirSolucao()
+}
+
+class Historico {
+    -id: Integer
+    -acao: String
+    -dataAcao: DateTime
+    -usuario: String
+    -detalhes: String
+    +registrarAcao()
+    +consultarHistorico()
+    +exportarHistorico()
+}
+
+class Departamento {
+    -id: Integer
+    -nome: String
+    -responsavel: String
+    -email: String
+    -telefone: String
+    -horarioFuncionamento: String
+    +criarDepartamento()
+    +atualizarDepartamento()
+    +excluirDepartamento()
+}
+
+' Relacionamentos
+Cliente "1" -- "*" Chamado : cria >
+Atendente "1" -- "*" Chamado : atende >
+Categoria "1" -- "*" Chamado : classifica >
+Chamado "1" -- "1" Avaliacao : recebe >
+Chamado "1" -- "*" Solucao : possui >
+Chamado "1" -- "*" Historico : registra >
+Departamento "1" -- "*" Atendente : coordena >
+Departamento "1" -- "*" Categoria : gerencia >
+
+@enduml 
